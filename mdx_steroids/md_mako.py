@@ -135,10 +135,10 @@ class MakoPreprocessor(Preprocessor):
             lines = [line_include_auto] + lines
         md = "\n".join(lines)
         mako_args = self.mako_args
-        if hasattr(self.markdown, "Meta"):
+        if hasattr(self.md, "Meta"):
             md_meta = {
                 k.lower(): "".join(v) if isinstance(v, list) else v
-                for k, v in self.markdown.Meta.items()
+                for k, v in self.md.Meta.items()
             }
             assert isinstance(mako_args, dict)
             mako_args.update(md_meta)

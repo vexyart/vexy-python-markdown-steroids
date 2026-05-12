@@ -105,7 +105,7 @@ class MetaYamlPreprocessor(Preprocessor):
                 k.lower(): v if isinstance(v, list) else [v] for k, v in meta.items()
             }
 
-            self.markdown.Meta = meta
+            self.md.Meta = meta
         return lines
 
 
