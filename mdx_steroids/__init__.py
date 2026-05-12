@@ -1,5 +1,10 @@
 # this_file: mdx_steroids/__init__.py
-from ._version import __version__
+"""mdx_steroids: small collection of Python Markdown extensions."""
+
+try:
+    from mdx_steroids.__version__ import __version__
+except ImportError:  # editable install before hatch-vcs has run
+    __version__ = "0.0.0+local"
 
 __all__ = [
     "absimgsrc",

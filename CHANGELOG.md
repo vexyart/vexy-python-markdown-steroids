@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+#### Build & Packaging
+- Modernized build: switched from `setuptools` to `hatchling` + `hatch-vcs`.
+- Renamed PyPI distribution from `mdx-steroids` to `vexy-python-markdown-steroids` (import package stays `mdx_steroids`).
+- Removed hand-rolled `mdx_steroids/_version.py`; version is now derived from git tags via `hatch-vcs` (generated `mdx_steroids/__version__.py`, gitignored).
+- Replaced `scripts/build.sh` (`python -m build`) and `scripts/release.sh` (`twine`) with root-level `build.sh` (`uvx hatch build`) and `publish.sh` (`gitnextver` + `uv publish`).
+- Bumped `requires-python` to `>=3.12` and tightened dependency lower bounds.
+- Updated project URLs to `https://github.com/vexyart/vexy-python-markdown-steroids`.
+
 ### Added
 
 #### Documentation Infrastructure

@@ -18,15 +18,23 @@ This library is ideal for developers, technical writers, and content creators us
 
 ## Installation
 
-Install `mdx-steroids` directly from GitHub using pip:
+Install from PyPI:
 
 ```bash
-pip install git+https://github.com/twardoch/markdown-steroids.git
+pip install vexy-python-markdown-steroids
 ```
+
+Or install the latest development version directly from GitHub:
+
+```bash
+pip install git+https://github.com/vexyart/vexy-python-markdown-steroids.git
+```
+
+The import package name remains `mdx_steroids`.
 
 **Requirements:**
 
-*   Python >= 3.8
+*   Python >= 3.12
 *   Core dependencies (automatically installed):
     *   `markdown>=3.5.0`
     *   `mako>=1.0.7`

@@ -138,3 +138,9 @@ ENV/
 # Project specific cache
 .dccache/
 srcdocs/.sass-cache/
+
+# Ruff cache
+.ruff_cache/
+
+# hatch-vcs generated version file
+mdx_steroids/__version__.py
