@@ -20,7 +20,7 @@ mdx_collapse>=0.1.0
 fontawesome-markdown>=0.2.6
 markdown-attr-plus>=0.3.0
 mkdocs-material>=1.8.1
-git+git://github.com/twardoch/markdown-steroids.git
+vexy-python-markdown-steroids @ git+https://github.com/vexyart/vexy-python-markdown-steroids@v0.4.13
 git+git://github.com/twardoch/markdown-utils.git
 git+git://github.com/twardoch/mkdocs-combine.git
 git+git://github.com/ryneeverett/python-markdown-comments.git

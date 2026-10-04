@@ -59,3 +59,7 @@ Verification: 65 migration tests pass; the full suite has 32 failures and 126 pa
 ## 2026-10-04 — Release verification
 
 Completed the compatibility migration and corrected rendered-output assertions against the bundled key map and Markdown behavior. Fixed image URL rewriting, explicit width scaling, empty caches and reference-image handling. All 163 tests pass; branch-aware coverage is 87%. `git diff --check` passes. Release 0.4.13 is prepared from scoped changes in a clean checkout; publication verification will be recorded in the issue audit.
+
+## 2026-10-04 — Published release and consumer verification
+
+Published Git tag/release v0.4.13 at commit 7441fd7b62c94b967d2dbfccfe0f11e118468a75, with wheel and source archive. Downloaded assets match local SHA-256 hashes; a fresh installed wheel reports 0.4.13 from site-packages. All 163 tests pass against the clean wheel. PyPI upload failed for missing credentials; no PyPI publication is claimed. All shared manual consumers use the public Git release. Historical docs requirements/launcher now reference that release, with obsolete unused extra dependencies removed; the historical docs build passes. Full issue evidence: `/Users/adam/Developer/vcs3/.mkdocs-build-audit/issue-102/REPORT.md`.
