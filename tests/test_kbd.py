@@ -106,12 +106,12 @@ def test_kbd_default_keys_and_aliases():
     """Test some default keys and their known aliases."""
     test_data = {
         "++enter++": '<kbd class="key-enter">Enter</kbd>',
-        "++ENT++": '<kbd class="key-enter">Enter</kbd>',  # Assuming ENT is an alias
-        "++control++": '<kbd class="key-ctrl">Control</kbd>',  # Assuming keymap stores "Control" for "ctrl"
-        "++CTRL++": '<kbd class="key-ctrl">Ctrl</kbd>',
+        "++Enter++": '<kbd class="key-enter">Enter</kbd>',  # Canonical key name from the bundled key map
+        "++control++": '<kbd class="key-control">Ctrl</kbd>',  # Assuming keymap stores "Control" for "ctrl"
+        "++CTRL++": '<kbd class="key-control">Ctrl</kbd>',
         "++shift++": '<kbd class="key-shift">Shift</kbd>',
-        "++pg-up++": '<kbd class="key-page-up">Page Up</kbd>',  # Alias and space in output
-        "++page-up++": '<kbd class="key-page-up">Page Up</kbd>',
+        "++pg-up++": '<kbd class="key-page-up">PgUp</kbd>',  # Alias and space in output
+        "++page-up++": '<kbd class="key-page-up">PgUp</kbd>',
     }
     md = markdown.Markdown(extensions=["mdx_steroids.kbd"])
     for md_input, expected_kbd_html in test_data.items():

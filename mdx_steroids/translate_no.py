@@ -33,7 +33,6 @@ Copyright (c) 2017 Adam Twardoch <adam+github@twardoch.com>
 License: [BSD 3-clause](https://opensource.org/licenses/BSD-3-Clause)
 """
 
-from future.utils import bytes_to_native_str as n
 
 __version__ = "0.5.4"
 
@@ -68,7 +67,7 @@ class NoTranslatePostprocessor(Postprocessor):
         for process_selector in self.selectors:
             for el in tree.xpath(process_selector):
                 self.add_attribute_to_element(el)
-        out = n(et.tostring(tree, pretty_print=False))
+        out = et.tostring(tree, encoding="unicode", method="html")
         self.html = str(out)
 
     def run(self, html):
@@ -95,10 +94,10 @@ class NoTranslateExtensions(Extension):
         }
         super().__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         processor = NoTranslatePostprocessor(md)
         processor.config = self.getConfigs()
-        md.postprocessors.add("translate_no", processor, "_end")
+        md.postprocessors.register(processor, "translate_no", 0)
         # md.registerExtension(self)
 
 

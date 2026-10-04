@@ -55,11 +55,6 @@ import re
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
 
-try:
-    from pymdownx.slugs import uslugify_cased_encoded as slugify
-except ImportError:
-    print("Install pymdownx: pip install --user pymdown-extensions")
-
 __version__ = "0.5.0"
 
 reInterLink = re.compile(r"(?<!!)\[([^\]]+)\]\((\S+(?=\)))\)")
@@ -101,7 +96,7 @@ class MDXInterLinkExtension(Extension):
         self.md = md
         # md.registerExtension(self) # Deprecated
         md.preprocessors.register(
-            MDXInterLinksProcessor(md, self.getConfigs()),
+            MDXInterLinksProcessor(md, self.config),
             "interlink",
             6,  # Use self.getConfigs()
         )

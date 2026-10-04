@@ -127,7 +127,7 @@ class MDXAbsoluteImagesTreeprocessor(Treeprocessor):
             >>> processor.is_relative('mailto:user@example.com')
             False
         """
-        if link.startswith("http"):
+        if link.startswith(("http", "//")):
             return False
         for scheme in known_schemes:
             if link.startswith(scheme):
@@ -150,7 +150,7 @@ class MDXAbsoluteImagesExtension(Extension):
         """Initialize the extension with configuration options."""
         self.config = {
             "base_url": [
-                None,
+                "",
                 "The base URL to which the relative paths will be appended",
             ],
         }
@@ -164,7 +164,7 @@ class MDXAbsoluteImagesExtension(Extension):
             md: The Markdown instance
         """
         absoluteImages = MDXAbsoluteImagesTreeprocessor(md, self.getConfigs())
-        md.treeprocessors.add("absoluteImages", absoluteImages, "_end")
+        md.treeprocessors.register(absoluteImages, "absoluteImages", 0)
         md.registerExtension(self)
 
 

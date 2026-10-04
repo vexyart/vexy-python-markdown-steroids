@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# this_file: mdx_steroids/kill_tags.py
 """
 # mdx_steroids.kill_tags
 
@@ -135,7 +136,6 @@ Copyright (c) 2017 Adam Twardoch <adam+github@twardoch.com>
 License: [BSD 3-clause](https://opensource.org/licenses/BSD-3-Clause)
 """
 
-from future.utils import bytes_to_native_str as n
 
 __version__ = "0.5.4"
 
@@ -191,9 +191,13 @@ class KillTagsPostprocessor(Postprocessor):
         return xpath_sel
 
     def kill_selectors(self):
-        tree = lxml.html.fromstring(self.html)
+        if not self.html.strip():
+            return
+        tree = lxml.html.fragment_fromstring(self.html, create_parent="div")
         for kill_selector in self.kill:
             for el in tree.xpath(kill_selector):
+                if el is tree or el.getparent() is None:
+                    continue
                 self.remove_keeping_tail(el)
         for kill_empty_selector in self.kill_empty:
             for el in tree.xpath(
@@ -203,8 +207,9 @@ class KillTagsPostprocessor(Postprocessor):
                 "]".format(kill_empty_selector)
             ):
                 self.remove_keeping_tail(el)
-        out = n(et.tostring(tree, pretty_print=False))
-        self.html = str(out)
+        self.html = (tree.text or "") + "".join(
+            et.tostring(child, encoding="unicode", method="html") for child in tree
+        )
 
     def run(self, html):
         self.html = html
@@ -233,10 +238,10 @@ class KillTagsExtension(Extension):
         }
         super().__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         processor = KillTagsPostprocessor(md)
         processor.config = self.getConfigs()
-        md.postprocessors.add("kill_tags", processor, "_end")
+        md.postprocessors.register(processor, "kill_tags", 0)
         # md.registerExtension(self)
 
 

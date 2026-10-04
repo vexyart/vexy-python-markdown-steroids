@@ -1,3 +1,4 @@
+# this_file: tests/test_figcap.py
 import markdown
 import pytest
 
@@ -98,3 +99,36 @@ def test_figcap_with_title_creates_figure():
     # The parametrize test has a check for count.
     # A simpler check: count how many times "src="image.png"" appears.
     assert html_output.count('src="image.png"') == 1
+
+
+def test_figcap_renders_emphasis_in_caption():
+    html = markdown.markdown('![Alt](image.png "Caption with **bold**")', extensions=['mdx_steroids.figcap'])
+    assert '<figcaption>Caption with <strong>bold</strong></figcaption>' in html
+
+
+def test_figcap_definition_caption_keeps_formatting_and_image():
+    html = markdown.markdown('![Alt](image.png)\n:  Caption with **bold**', extensions=['def_list', 'mdx_steroids.figcap'])
+    assert '<figure>' in html
+    assert '<figcaption>Caption with <strong>bold</strong></figcaption>' in html
+    assert 'alt="Alt"' in html
+    assert html.count('src="image.png"') == 1
+
+
+def test_figcap_preserves_ordinary_definition_lists():
+    html = markdown.markdown('Term\n:  Definition', extensions=['def_list', 'mdx_steroids.figcap'])
+    assert '<dl>' in html
+    assert '<figure>' not in html
+
+
+def test_figcap_consecutive_definition_captions():
+    html = markdown.markdown('![First](a.png)\n:  First caption\n\n![Second](b.png)\n:  Second caption', extensions=['def_list', 'mdx_steroids.figcap'])
+    assert html.count('<figure>') == 2
+    assert '<figcaption>First caption</figcaption>' in html
+    assert '<figcaption>Second caption</figcaption>' in html
+
+
+def test_figcap_keeps_two_images_with_shared_caption():
+    html = markdown.markdown('![](a.png) ![](b.png)\n:  Shared caption', extensions=['def_list', 'mdx_steroids.figcap'])
+    assert html.count('<figure>') == 1
+    assert html.count('<img ') == 2
+    assert '<figcaption>Shared caption</figcaption>' in html

@@ -1,4 +1,6 @@
 # this_file: tests/test_replimgsrc.py
+from textwrap import dedent
+
 import markdown
 import pytest
 
@@ -44,7 +46,7 @@ def test_replimgsrc_extension(md_input, config, expected_part):
         extensions=["mdx_steroids.replimgsrc"],
         extension_configs={"mdx_steroids.replimgsrc": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     assert expected_part in html_output
 
 
@@ -61,7 +63,7 @@ def test_replimgsrc_multiple_images():
         extensions=["mdx_steroids.replimgsrc"],
         extension_configs={"mdx_steroids.replimgsrc": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should replace in matching images
     assert "new/location/img1.jpg" in html_output
@@ -79,7 +81,7 @@ def test_replimgsrc_with_title():
         extensions=["mdx_steroids.replimgsrc"],
         extension_configs={"mdx_steroids.replimgsrc": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     assert 'src="new/image.jpg"' in html_output
     assert 'title="Image Title"' in html_output
@@ -91,7 +93,7 @@ def test_replimgsrc_no_config():
     
     # Should handle gracefully if no config provided
     md = markdown.Markdown(extensions=["mdx_steroids.replimgsrc"])
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should not change anything if no find/replace specified
     assert 'src="image.jpg"' in html_output
@@ -106,7 +108,7 @@ def test_replimgsrc_empty_find():
         extensions=["mdx_steroids.replimgsrc"],
         extension_configs={"mdx_steroids.replimgsrc": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Empty find should match and prepend to all src attributes
     assert 'src="prefix-image.jpg"' in html_output
@@ -121,7 +123,7 @@ def test_replimgsrc_case_sensitive():
         extensions=["mdx_steroids.replimgsrc"],
         extension_configs={"mdx_steroids.replimgsrc": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should not replace due to case mismatch
     assert 'src="Image.JPG"' in html_output
@@ -136,6 +138,6 @@ def test_replimgsrc_special_characters():
         extensions=["mdx_steroids.replimgsrc"],
         extension_configs={"mdx_steroids.replimgsrc": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     assert 'src="new-path/image (1).jpg"' in html_output

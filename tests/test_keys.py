@@ -35,8 +35,8 @@ class TestKeysExtension:
         text = "Press ++Enter++ or ++Escape++ or ++Tab++."
         html = markdown.markdown(text, extensions=['mdx_steroids.keys'])
         assert 'Enter' in html
-        assert 'Escape' in html
-        assert 'Tab' in html
+        assert '<kbd class="key-escape">Esc</kbd>' in html
+        assert '<kbd class="key-tab">⇥</kbd>' in html
 
     def test_custom_separator(self):
         """Test custom separator configuration."""
@@ -93,8 +93,8 @@ class TestKeysExtension:
                 }
             }
         )
-        assert 'Page Up' in html or 'PageUp' in html
-        assert 'Page Down' in html or 'PageDown' in html
+        assert '<kbd class="key-page-up">PgUp</kbd>' in html
+        assert '<kbd class="key-page-down">PgDn</kbd>' in html
 
     def test_custom_css_class(self):
         """Test custom CSS class configuration."""
@@ -172,4 +172,4 @@ Common shortcuts:
         text = "Navigate with ++Up++, ++Down++, ++Left++, and ++Right++."
         html = markdown.markdown(text, extensions=['mdx_steroids.keys'])
         for direction in ['Up', 'Down', 'Left', 'Right']:
-            assert direction in html
+            assert f'class="key-arrow-{direction.lower()}"' in html

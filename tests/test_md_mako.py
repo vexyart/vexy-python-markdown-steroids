@@ -218,7 +218,7 @@ Total items: ${len(items)}
             # Create auto-include file
             auto_file = os.path.join(tmpdir, 'auto.mako')
             with open(auto_file, 'w') as f:
-                f.write("<%\n    site_name = 'My Site'\n%>")
+                f.write("## Automatic Header\n")
 
             text = "Welcome to ${site_name}!"
             html = markdown.markdown(
@@ -226,8 +226,10 @@ Total items: ${len(items)}
                 extensions=['mdx_steroids.md_mako'],
                 extension_configs={
                     'mdx_steroids.md_mako': {
-                        'include_auto': auto_file
+                        'include_auto': auto_file,
+                        'meta': {'site_name': 'My Site'}
                     }
                 }
             )
             assert "Welcome to My Site!" in html
+            assert "<h2>Automatic Header</h2>" in html

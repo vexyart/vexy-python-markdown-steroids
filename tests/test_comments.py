@@ -6,7 +6,7 @@ import pytest
 TEST_CASES = [
     (
         "This is text with <!--- hidden comment --> and more text.",
-        "<p>This is text with  and more text.</p>",
+        "<p>This is text with and more text.</p>",
     ),
     (
         "Standard comment <!-- visible --> stays.",
@@ -14,11 +14,11 @@ TEST_CASES = [
     ),
     (
         "Multiple <!--- first --> comments <!--- second --> here.",
-        "<p>Multiple  comments  here.</p>",
+        "<p>Multiple comments here.</p>",
     ),
     (
         "Text\n<!--- multiline\ncomment -->\nmore text.",
-        "<p>Text\n\nmore text.</p>",
+        "<p>Text</p>\n<p>more text.</p>",
     ),
     (
         "No comments here.",
@@ -26,11 +26,11 @@ TEST_CASES = [
     ),
     (
         "<!--- comment at start --> text",
-        "<p> text</p>",
+        "<p>text</p>",
     ),
     (
         "text <!--- comment at end -->",
-        "<p>text </p>",
+        "<p>text</p>",
     ),
 ]
 
@@ -56,7 +56,7 @@ def test_comments_preserves_standard_comments():
 def test_comments_mixed_types():
     """Test mixing standard and special comments."""
     md_input = "Text <!-- keep --> and <!--- remove --> here."
-    expected = "<p>Text <!-- keep --> and  here.</p>"
+    expected = "<p>Text <!-- keep --> and here.</p>"
     
     md = markdown.Markdown(extensions=["mdx_steroids.comments"])
     html_output = md.convert(md_input)

@@ -1,6 +1,8 @@
 # this_file: tests/test_img_smart.py
 """Tests for the img_smart extension."""
 
+from bs4 import BeautifulSoup
+
 import markdown
 import pytest
 import tempfile
@@ -126,7 +128,7 @@ class TestImgSmartExtension:
         )
         assert 'width="300"' in html
         assert 'height="200"' in html
-        assert 'class="my-class"' in html
+        assert 'my-class' in BeautifulSoup(html, 'html.parser').find('img')['class']
         assert 'id="my-id"' in html
 
     def test_image_reference_style(self):

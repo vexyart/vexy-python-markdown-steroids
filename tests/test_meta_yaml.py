@@ -46,8 +46,8 @@ Content here."""
     html_output = md.convert(md_input)
     
     assert md.Meta['title'] == ['Test Page']
-    assert md.Meta['tags'] == [['python', 'markdown', 'testing']]
-    assert md.Meta['categories'] == [['web', 'development']]
+    assert md.Meta['tags'] == ['python', 'markdown', 'testing']
+    assert md.Meta['categories'] == ['web', 'development']
 
 
 def test_meta_yaml_nested():
@@ -186,8 +186,14 @@ Content here."""
     html_output = md.convert(md_input)
     
     assert md.Meta['title'] == ['Test Page']
-    # Boolean and numeric values should be preserved
-    assert md.Meta['published'] == [True]
-    assert md.Meta['draft'] == [False]
-    assert md.Meta['version'] == [1.2]
-    assert md.Meta['count'] == [42]
+    # BaseLoader preserves metadata values as strings, matching Markdown meta
+    assert md.Meta['published'] == ['true']
+    assert md.Meta['draft'] == ['false']
+    assert md.Meta['version'] == ['1.2']
+    assert md.Meta['count'] == ['42']
+
+def test_meta_yaml_preserves_leading_horizontal_rule():
+    html = markdown.markdown('---\n\n# Release Notes\n\n**Highlights**', extensions=['mdx_steroids.meta_yaml'])
+    assert '<hr />' in html
+    assert '<h1>Release Notes</h1>' in html
+    assert '<strong>Highlights</strong>' in html

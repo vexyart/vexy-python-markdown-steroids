@@ -31,6 +31,12 @@ dependencies = [
     "cssselect>=1.2",
     "lxml>=5.0",
     "beautifulsoup4>=4.12",
+    "html5lib>=1.1",
+    "PyYAML>=6.0",
+    "filetype>=1.2",
+    "imageio>=2.0",
+    "requests>=2.0",
+    "json-flatten>=0.3",
 ]
 
 [project.optional-dependencies]

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# this_file: mdx_steroids/img_smart.py
 
 # Based on https://github.com/glushchenko/micropress/
 
@@ -12,7 +13,7 @@ from os.path import exists
 import filetype
 import imageio.v3 as iio
 import requests
-from markdown import Extension
+from markdown import Extension, Markdown
 from markdown.blockprocessors import BlockProcessor
 from markdown.extensions import attr_list
 
@@ -58,14 +59,15 @@ class MDXSmartImageProcessor(BlockProcessor):
     def test(self, parent, block):
         isImage = bool(self.FIGURES_RE.search(block))
         isOnlyOneLine = len(block.splitlines()) == 1
-        return isImage and isOnlyOneLine
+        return isImage and isOnlyOneLine and bool(self.INLINE_LINK_RE.search(block))
 
     def run(self, parent, blocks):
         cache_path = self.config.get("cache", "")
         cache = {}
         if cache_path and exists(cache_path):
             with open(cache_path) as f:
-                cache = json.load(f)
+                text = f.read().strip()
+                cache = json.loads(text) if text else {}
 
         alt = url = attr = None
 
@@ -75,8 +77,12 @@ class MDXSmartImageProcessor(BlockProcessor):
         if rAlt := self.FIGURES_RE.search(raw_block):
             alt = rAlt.group(1)
 
-        if rUrl := self.INLINE_LINK_RE.search(mdImage):
-            url = rUrl.group(2)
+        image = etree.fromstring(Markdown().convert(mdImage)).find(".//img")
+        if image is None:
+            blocks.insert(0, raw_block)
+            return False
+        url = image.get("src")
+        original_title = image.get("title")
 
         if rAttr := self.INLINE_LINK_RE.search(mdImage):
             attr = self.INLINE_LINK_RE.search(mdImage).group(3)
@@ -159,7 +165,7 @@ class MDXSmartImageProcessor(BlockProcessor):
                 json.dump(cache, f)
 
         scale = 2.0
-        title = None
+        title = original_title
 
         img = etree.Element("img")
 
@@ -168,7 +174,7 @@ class MDXSmartImageProcessor(BlockProcessor):
             image_size = self.assignExtra(img, attr)
             width = int(image_size.get("width", width))
             height = int(image_size.get("height", height))
-            scale = float(image_size.get("scale", scale))
+            scale = float(image_size.get("scale", 1.0 if "width" in image_size else scale))
             title = image_size.get("title", title)
 
         htmlcls = img.get("class", "")
@@ -198,7 +204,7 @@ class MDXSmartImageProcessor(BlockProcessor):
             img.set("alt", alt)
         if htmlcls:
             img.set("class", htmlcls)
-        img.set("src", orig_url)
+        img.set("src", url)
         if self.config.get("lazy", False):
             img.set("loading", "lazy")
 

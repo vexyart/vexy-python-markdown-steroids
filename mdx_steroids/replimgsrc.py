@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# this_file: mdx_steroids/replimgsrc.py
 """
 # mdx_steroids.replimgsrc
 
@@ -43,6 +44,8 @@ class MDXReplaceImageSrcTreeprocessor(Treeprocessor):
             image.set("src", self.find_replace(image.attrib["src"]))
 
     def find_replace(self, path):
+        if not self.config["find"]:
+            return self.config["replace"] + path
         return path.replace(self.config["find"], self.config["replace"])
 
 
@@ -55,9 +58,9 @@ class MDXReplaceImageSrcExtension(Extension):
 
         super().__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         ReplaceImageSrc = MDXReplaceImageSrcTreeprocessor(md, self.getConfigs())
-        md.treeprocessors.add("ReplaceImageSrc", ReplaceImageSrc, "_end")
+        md.treeprocessors.register(ReplaceImageSrc, "ReplaceImageSrc", 0)
         md.registerExtension(self)
 
 

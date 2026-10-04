@@ -130,11 +130,14 @@ class MakoPreprocessor(Preprocessor):
                 lines = ["<%!"] + python_block + ["%>"] + lines
             else:
                 lines = [""] + lines
+        if self.mako_include_auto and os.path.isabs(self.mako_include_auto):
+            self.mako_base_dirs.insert(0, os.path.dirname(self.mako_include_auto))
+            self.mako_include_auto = os.path.basename(self.mako_include_auto)
         if self.mako_include_auto:
             line_include_auto = f'<%include file="{self.mako_include_auto}"/>'
             lines = [line_include_auto] + lines
         md = "\n".join(lines)
-        mako_args = self.mako_args
+        mako_args = dict(self.mako_args)
         if hasattr(self.md, "Meta"):
             md_meta = {
                 k.lower(): "".join(v) if isinstance(v, list) else v
@@ -143,7 +146,8 @@ class MakoPreprocessor(Preprocessor):
             assert isinstance(mako_args, dict)
             mako_args.update(md_meta)
         mako_lookup = TemplateLookup(
-            directories=self.mako_base_dirs, strict_undefined=True
+            directories=self.mako_base_dirs, strict_undefined=True,
+            preprocessor=self.keep_markdown_headings
         )
         mako_tpl = Template(
             md,
@@ -153,7 +157,7 @@ class MakoPreprocessor(Preprocessor):
             preprocessor=self.keep_markdown_headings,
         )
         mako_result = str(mako_tpl.render(**mako_args))
-        lines = mako_result.splitlines()[1:]
+        lines = mako_result.splitlines()
         return lines
 
 
@@ -191,7 +195,7 @@ class MarkdownMakoExtension(Extension):
         md.registerExtension(self)
         config = self.getConfigs()
         md_mako = MakoPreprocessor(config, md)
-        md.preprocessors.register(md_mako, "md_mako", 980)
+        md.preprocessors.register(md_mako, "md_mako", 28)
 
 
 def makeExtension(*args, **kwargs):

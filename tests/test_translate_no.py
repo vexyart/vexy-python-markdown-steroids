@@ -1,4 +1,6 @@
 # this_file: tests/test_translate_no.py
+from textwrap import dedent
+
 import markdown
 import pytest
 
@@ -18,7 +20,7 @@ def test_translate_no_default():
     """
     
     md = markdown.Markdown(extensions=["mdx_steroids.translate_no"])
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should add translate="no" and notranslate class to default elements
     assert 'translate="no"' in html_output
@@ -41,7 +43,7 @@ def test_translate_no_custom_selectors():
         extensions=["mdx_steroids.translate_no"],
         extension_configs={"mdx_steroids.translate_no": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should add translate="no" to custom selectors
     assert 'translate="no"' in html_output
@@ -64,7 +66,7 @@ def test_translate_no_xpath():
         extensions=["mdx_steroids.translate_no"],
         extension_configs={"mdx_steroids.translate_no": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should add translate="no" to XPath selected elements
     assert 'translate="no"' in html_output
@@ -85,7 +87,7 @@ def test_translate_no_normalize():
         extensions=["mdx_steroids.translate_no"],
         extension_configs={"mdx_steroids.translate_no": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should process with normalization
     assert 'translate="no"' in html_output
@@ -104,7 +106,7 @@ def test_translate_no_multiple_elements():
     """
     
     md = markdown.Markdown(extensions=["mdx_steroids.translate_no"])
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should add translate="no" to all matching elements
     code_count = html_output.count('translate="no"')
@@ -123,7 +125,7 @@ def test_translate_no_nested_elements():
     """
     
     md = markdown.Markdown(extensions=["mdx_steroids.translate_no"])
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should add translate="no" to code element inside div
     assert 'translate="no"' in html_output
@@ -140,7 +142,7 @@ def test_translate_no_preserves_existing_attributes():
     """
     
     md = markdown.Markdown(extensions=["mdx_steroids.translate_no"])
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should preserve existing attributes and add translate="no"
     assert 'class="language-python' in html_output or 'class="notranslate language-python' in html_output
@@ -158,7 +160,7 @@ def test_translate_no_no_matching_elements():
     """
     
     md = markdown.Markdown(extensions=["mdx_steroids.translate_no"])
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should not add translate="no" if no elements match
     assert "Just regular text" in html_output
@@ -182,7 +184,7 @@ def test_translate_no_mixed_content():
     """
     
     md = markdown.Markdown(extensions=["mdx_steroids.translate_no"])
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should add translate="no" to code-related elements
     assert 'translate="no"' in html_output
@@ -208,7 +210,7 @@ def test_translate_no_empty_config():
         extensions=["mdx_steroids.translate_no"],
         extension_configs={"mdx_steroids.translate_no": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should not add translate="no" if no selectors
     assert "code" in html_output

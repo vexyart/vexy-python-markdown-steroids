@@ -47,6 +47,8 @@ License: BSD (see LICENSE.md for details)
 
 """
 
+import re
+
 import yaml
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
@@ -68,11 +70,9 @@ Loader.add_constructor("tag:yaml.org,2002:str", construct_yaml_str)
 class MetaYamlExtension(Extension):
     """Extension for parsing YAML-Metadata with Python-Markdown."""
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add MetaYamlPreprocessor to Markdown instance."""
-        md.preprocessors.add(
-            "meta_yaml", MetaYamlPreprocessor(md), "<normalize_whitespace"
-        )
+        md.preprocessors.register(MetaYamlPreprocessor(md), "meta_yaml", 29)
 
 
 class MetaYamlPreprocessor(Preprocessor):
@@ -87,6 +87,12 @@ class MetaYamlPreprocessor(Preprocessor):
 
     def run(self, lines):
         """Parse Meta-Data and store in Markdown.Meta."""
+        self.md.Meta = {}
+        if not lines:
+            return lines
+        # A leading horizontal rule is ordinary Markdown, not metadata.
+        if lines[0] == "---" and (len(lines) < 2 or not re.match(r"^[\w-]+\s*:", lines[1])):
+            return lines
         yaml_block = []
         line = lines.pop(0)
         if line == "---":
@@ -109,6 +115,6 @@ class MetaYamlPreprocessor(Preprocessor):
         return lines
 
 
-def makeExtension(configs={}):
+def makeExtension(**kwargs):
     """set up extension."""
-    return MetaYamlExtension(configs=configs)
+    return MetaYamlExtension(**kwargs)

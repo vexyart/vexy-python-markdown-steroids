@@ -42,3 +42,20 @@
 - Unable to build documentation locally due to environment restrictions
 - All documentation is structured and ready for deployment
 - Test files created but not executed due to environment limitations
+
+## 2026-10-04 — Issue 102 documentation build repair
+
+Modernized kill_tags/replimgsrc registration and interlink configuration passing; preserved Unicode/tail text and empty HTML. Corrected indented kill_tags fixtures and added rendering regressions: 14 targeted tests pass. Removed unsupported historical SuperFences option. Historical documentation and full-suite migration remain incomplete; not published.
+
+Evidence: `/Users/adam/Developer/vcs3/.mkdocs-build-audit/issue-102/README.md`.
+
+
+## 2026-10-04 — Issue 102 extension migration continuation
+
+Historical documentation now builds. Ported figure-caption, metadata, absolute-image and translate-no registrations; current PyMdown wiki slugs preserve case. Fixed Mako first-line loss, included headings, metadata ordering, metadata isolation and absolute auto-includes. Declared the runtime dependencies previously supplied only by build launchers. Removed unused incompatible icon/span extensions from the historical documentation config.
+
+Verification: 65 migration tests pass; the full suite has 32 failures and 126 passes. Publication and downstream migration remain pending. Evidence is in `/Users/adam/Developer/vcs3/.mkdocs-build-audit/issue-102/`.
+
+## 2026-10-04 — Release verification
+
+Completed the compatibility migration and corrected rendered-output assertions against the bundled key map and Markdown behavior. Fixed image URL rewriting, explicit width scaling, empty caches and reference-image handling. All 163 tests pass; branch-aware coverage is 87%. `git diff --check` passes. Release 0.4.13 is prepared from scoped changes in a clean checkout; publication verification will be recorded in the issue audit.

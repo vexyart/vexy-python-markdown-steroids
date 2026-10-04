@@ -87,7 +87,6 @@ markdown_extensions:
                   smart_enable: "all" # 'all' | 'asterisk' | 'underscore' | 'none'
         - pymdownx.superfences:
                   disable_indented_code_blocks: false
-                  highlight_code: true
         - pymdownx.escapeall:
                   hardbreak: true
                   nbsp: true
@@ -153,10 +152,8 @@ markdown_extensions:
                   repl_path: "/img/"
                   repl_url: "/img/"
                   alt_figure: true
-        - fontawesome_markdown
         - mdx_steroids.comments
         #- mdx_steroids.meta_yaml
-        - mdx_custom_span_class
         - mdx_steroids.md_mako:
                   python_block: "mako-mdx-steroids.py"
                   meta:

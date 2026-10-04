@@ -1,4 +1,6 @@
 # this_file: tests/test_kill_tags.py
+from textwrap import dedent
+
 import markdown
 import pytest
 
@@ -19,7 +21,7 @@ def test_kill_tags_basic():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should remove the div with class remove-me
     assert "remove-me" not in html_output
@@ -44,7 +46,7 @@ def test_kill_tags_multiple_selectors():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should remove both targeted elements
     assert "Advertisement" not in html_output
@@ -68,7 +70,7 @@ def test_kill_tags_xpath():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should remove the specific div
     assert "Remove this" not in html_output
@@ -93,7 +95,7 @@ def test_kill_tags_empty_elements():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should keep non-empty elements
     assert "Content here" in html_output
@@ -115,7 +117,7 @@ def test_kill_tags_normalize():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should remove the targeted element
     assert "Remove this" not in html_output
@@ -133,7 +135,7 @@ def test_kill_tags_no_config():
     """
     
     md = markdown.Markdown(extensions=["mdx_steroids.kill_tags"])
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should work with default configuration
     assert "Content" in html_output
@@ -154,7 +156,7 @@ def test_kill_tags_known_selectors():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should remove known elements (depends on implementation)
     assert "Normal content" in html_output
@@ -180,7 +182,7 @@ def test_kill_tags_complex_html():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should remove only the ad div
     assert "Advertisement" not in html_output
@@ -208,7 +210,7 @@ def test_kill_tags_nested_elements():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should remove the inner div and its content
     assert "Nested content" not in html_output
@@ -233,7 +235,7 @@ def test_kill_tags_multiple_instances():
         extensions=["mdx_steroids.kill_tags"],
         extension_configs={"mdx_steroids.kill_tags": config}
     )
-    html_output = md.convert(md_input)
+    html_output = md.convert(dedent(md_input))
     
     # Should remove all instances
     assert "Ad 1" not in html_output
@@ -241,3 +243,15 @@ def test_kill_tags_multiple_instances():
     # Should keep regular content
     assert "Content" in html_output
     assert "More content" in html_output
+
+def test_kill_tags_preserves_unicode_and_tail():
+    html = markdown.markdown('Żółć <del>omit</del> końcówka.', extensions=['mdx_steroids.kill_tags'], extension_configs={'mdx_steroids.kill_tags': {'kill_known': True}})
+    assert 'omit' not in html
+    assert 'Żółć  końcówka.' in html
+
+
+def test_kill_tags_empty_html_fragment():
+    from mdx_steroids.kill_tags import KillTagsPostprocessor
+    processor = KillTagsPostprocessor()
+    processor.config = {}
+    assert processor.run('') == ''
