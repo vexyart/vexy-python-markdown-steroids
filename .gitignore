@@ -144,3 +144,10 @@ srcdocs/.sass-cache/
 
 # hatch-vcs generated version file
 mdx_steroids/__version__.py
+
+# Repo hygiene (docs/packaging spec)
+.DS_Store
+.omc/
+site/
+node_modules/
+.dccache

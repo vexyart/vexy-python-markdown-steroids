@@ -48,10 +48,10 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/vexyart/vexy-python-markdown-steroids"
-Documentation = "https://github.com/vexyart/vexy-python-markdown-steroids"
+Documentation = "https://vexy.dev/vexy-python-markdown-steroids/"
 Repository = "https://github.com/vexyart/vexy-python-markdown-steroids"
 Issues = "https://github.com/vexyart/vexy-python-markdown-steroids/issues"
-Changelog = "https://github.com/vexyart/vexy-python-markdown-steroids/blob/main/CHANGELOG.md"
+Changelog = "https://github.com/vexyart/vexy-python-markdown-steroids/blob/master/CHANGELOG.md"
 
 [tool.hatch.version]
 source = "vcs"
@@ -61,6 +61,7 @@ version-file = "mdx_steroids/__version__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["mdx_steroids"]
+exclude = ["mdx_steroids/CLAUDE.md"]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -70,6 +71,7 @@ include = [
     "/CHANGELOG.md",
     "/LICENSE",
 ]
+exclude = ["mdx_steroids/CLAUDE.md"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"

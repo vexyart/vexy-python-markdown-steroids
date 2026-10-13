@@ -1,5 +1,6 @@
-```markdown
 # mdx-steroids
+
+**Documentation:** https://vexy.dev/vexy-python-markdown-steroids/
 
 **mdx-steroids** is a versatile collection of Python Markdown extensions designed to supercharge your Markdown processing workflow. It provides a suite of enhancements for fine-grained control over HTML output, enabling features like absolute image paths, figure captions, dynamic content with Mako, keyboard key styling, wikilinks, and much more, directly within your Markdown files.
 
@@ -413,8 +414,8 @@ Contributions are welcome! Whether it's bug reports, feature suggestions, or cod
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/twardoch/markdown-steroids.git
-    cd markdown-steroids
+    git clone https://github.com/vexyart/vexy-python-markdown-steroids.git
+    cd vexy-python-markdown-steroids
     ```
 2.  **Create and activate a virtual environment:**
     ```bash
@@ -453,11 +454,11 @@ Test configurations can be found in `pyproject.toml` and `pytest.ini`.
 3.  Make your changes, ensuring code is formatted and linted, and tests pass.
 4.  Write clear commit messages.
 5.  Push your branch to your fork.
-6.  Open a pull request against the main `markdown-steroids` repository. Provide a clear description of your changes.
+6.  Open a pull request against the `master` branch of `vexyart/vexy-python-markdown-steroids`. Provide a clear description of your changes.
 
 ### Reporting Issues
 
-If you encounter any bugs or have suggestions for new features, please open an issue on the [GitHub Issues page](https://github.com/twardoch/markdown-steroids/issues).
+If you encounter any bugs or have suggestions for new features, please open an issue on the [GitHub Issues page](https://github.com/vexyart/vexy-python-markdown-steroids/issues).
 
 ## License
 
@@ -474,8 +475,3 @@ This project incorporates or is based on code from several sources, and their re
 *   The **Python Markdown Project** and its contributors for the core library.
 *   All other contributors to the `markdown-steroids` project and the projects it derives from.
 
----
-
-This `README.md` was last updated on ${today_date}. <!-- You might want a Mako variable or similar if this README itself is processed -->
-If you find it helpful, consider starring the project on GitHub!
-```

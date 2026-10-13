@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - docs site and release scripts
+
+### Changed
+
+- Documentation rebuilt with ProperDocs + MaterialX: source in `src_docs/md/` (moved
+  from `src_docs/docs/`, 22 pages including one per extension and a generated key
+  name reference), config in `src_docs/mkdocs.yml`, built into `docs/` by
+  `src_docs/build.sh` and the new `Docs` workflow. Published at
+  https://vexy.dev/vexy-python-markdown-steroids/.
+- Removed the legacy `srcdocs/` Mako-based docs source; its content was migrated.
+- `README.md` was wrapped in a ```` ```markdown ```` fence and rendered as one code
+  block; the fence and the stray `${today_date}` footer are gone, links point to
+  `vexyart/vexy-python-markdown-steroids`.
+- `build.sh` builds docs and/or the package (`./build.sh [all|docs|package]`);
+  `publish.sh` tags with `gitnextver`, builds and uploads with `uv publish`.
+- `pyproject.toml`: `Documentation` URL points to vexy.dev; `Changelog` URL uses
+  the `master` branch.
+- `.dccache` is no longer tracked.
+
 ## [0.4.13] - 2026-10-04
 
 ### Fixed

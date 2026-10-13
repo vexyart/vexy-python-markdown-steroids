@@ -1,122 +1,80 @@
 # this_file: src_docs/mkdocs.yml
-site_name: Markdown Toolset
-site_description: A collection of Python-based Markdown processing extensions
-site_url: https://github.com/twardoch/markdown-toolset
-repo_url: https://github.com/twardoch/markdown-toolset
-repo_name: twardoch/markdown-toolset
-
+site_name: vexy-python-markdown-steroids
+site_description: Python-Markdown extensions for image paths and captions, keyboard keys, wiki links, Mako templates, YAML metadata and HTML clean-up
+site_url: https://vexy.dev/vexy-python-markdown-steroids/
+repo_url: https://github.com/vexyart/vexy-python-markdown-steroids
+repo_name: vexyart/vexy-python-markdown-steroids
+edit_uri: edit/master/src_docs/md/
+docs_dir: md
+site_dir: ../docs
+use_directory_urls: true
 theme:
-  name: material
+  name: materialx
   features:
-    - navigation.tabs
     - navigation.sections
-    - navigation.path
     - navigation.top
-    - search.suggest
+    - navigation.footer
+    - toc.follow
     - search.highlight
-    - content.tabs.link
     - content.code.copy
     - content.code.annotate
-    - toc.follow
   palette:
     - scheme: default
       primary: indigo
       accent: indigo
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
+      toggle: {icon: material/brightness-7, name: Switch to dark mode}
     - scheme: slate
-      primary: black
-      accent: amber
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
-  icon:
-    repo: fontawesome/brands/github
-
-plugins:
-  - search
-  - mkdocstrings:
-      handlers:
-        python:
-          options:
-            show_root_heading: true
-            show_source: true
-            heading_level: 2
-            docstring_style: google
-            members_order: source
-            show_signature: true
-            show_signature_annotations: true
-            separate_signature: true
-            unwrap_annotated: true
-            show_symbol_type_heading: true
-            show_symbol_type_toc: true
-  - mike:
-      canonical_version: latest
-
+      primary: indigo
+      accent: indigo
+      toggle: {icon: material/brightness-4, name: Switch to light mode}
 markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc: {permalink: true}
   - pymdownx.details
-  - pymdownx.arithmatex:
-      generic: true
-  - pymdownx.critic
-  - pymdownx.caret
+  - pymdownx.highlight: {anchor_linenums: true}
+  - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.mark
-  - pymdownx.tilde
-  - admonition
-  - footnotes
-  - attr_list
-  - md_in_html
-  - toc:
-      permalink: true
-
-extra:
-  version:
-    provider: mike
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/twardoch
-
+  - pymdownx.superfences
+  - pymdownx.tabbed: {alternate_style: true}
+  - pymdownx.tasklist: {custom_checkbox: true}
+plugins:
+  - search
 extra_css:
   - style/custom.css
-
 nav:
   - Home: index.md
-  - Getting Started:
-    - Installation: getting-started/installation.md
-    - Quick Start: getting-started/quickstart.md
-    - Configuration: getting-started/configuration.md
+  - Getting started:
+      - Installation: getting-started/installation.md
+      - Quick start: getting-started/quickstart.md
+      - Configuration: getting-started/configuration.md
   - Extensions:
-    - Overview: extensions/index.md
-    - absimgsrc: extensions/absimgsrc.md
-    - figcap: extensions/figcap.md
-    - keys: extensions/keys.md
-    - kill_tags: extensions/kill_tags.md
-    - md_mako: extensions/md_mako.md
-    - meta_yaml: extensions/meta_yaml.md
-    - replimgsrc: extensions/replimgsrc.md
-    - wikilink: extensions/wikilink.md
-  - API Reference:
-    - Overview: api/index.md
-    - Extensions API: api/extensions.md
-    - Utilities: api/utilities.md
+      - Overview: extensions/index.md
+      - absimgsrc: extensions/absimgsrc.md
+      - comments: extensions/comments.md
+      - figcap: extensions/figcap.md
+      - img_smart: extensions/img_smart.md
+      - interlink: extensions/interlink.md
+      - keys and kbd: extensions/keys.md
+      - Key name reference: extensions/keys-reference.md
+      - kill_tags: extensions/kill_tags.md
+      - md_mako: extensions/md_mako.md
+      - meta_yaml: extensions/meta_yaml.md
+      - replimgsrc: extensions/replimgsrc.md
+      - translate_no: extensions/translate_no.md
+      - wikilink: extensions/wikilink.md
   - Development:
-    - Contributing: development/contributing.md
-    - Testing: development/testing.md
-    - Architecture: development/architecture.md
+      - Architecture: development/architecture.md
+      - Contributing: development/contributing.md
   - About:
-    - License: about/license.md
-    - Credits: about/credits.md
-    - Changelog: about/changelog.md
-
+      - License and credits: about/license.md
+      - Changelog: about/changelog.md
+# Rebuild the preview when the extension sources change (properdocs serve).
 watch:
-  - ../src
+  - ../mdx_steroids
