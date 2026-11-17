@@ -1,0 +1,30 @@
+# this_file: src_docs/md/.nav.yml
+nav:
+  - Home: index.md
+  - Getting started:
+      - Installation: getting-started/installation.md
+      - Quick start: getting-started/quickstart.md
+      - Configuration: getting-started/configuration.md
+  - Extensions:
+      - Overview: extensions/index.md
+      - absimgsrc: extensions/absimgsrc.md
+      - comments: extensions/comments.md
+      - figcap: extensions/figcap.md
+      - img_smart: extensions/img_smart.md
+      - interlink: extensions/interlink.md
+      - keys and kbd: extensions/keys.md
+      - Key name reference: extensions/keys-reference.md
+      - kill_tags: extensions/kill_tags.md
+      - md_mako: extensions/md_mako.md
+      - meta_yaml: extensions/meta_yaml.md
+      - replimgsrc: extensions/replimgsrc.md
+      - translate_no: extensions/translate_no.md
+      - wikilink: extensions/wikilink.md
+  - Development:
+      - Architecture: development/architecture.md
+      - Contributing: development/contributing.md
+  - About:
+      - License and credits: about/license.md
+      - Changelog: about/changelog.md
+# Rebuild the preview when the extension sources change (properdocs serve).
+  - Topics: topics.md

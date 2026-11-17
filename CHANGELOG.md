@@ -140,3 +140,9 @@ Verification: 65 migration tests pass; the full suite has 32 failures and 126 pa
 - Figure captions now support the manuals' definition-list form, consecutive figures, and multiple images sharing one caption.
 - Fresh caption/metadata/outline verification: 25 tests passed. All six existing FontLab active-manual compatibility regressions also passed.
 - Full package verification and release remain pending.
+
+## 2026-10-18: documentation plugins
+
+- Use MaterialX search, inherited metadata and a topic index; keep ordered navigation in awesome-nav.
+- The documentation wrapper installs the plugins required by this site.
+- Strict documentation build and rendered output checks passed.
